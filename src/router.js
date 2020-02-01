@@ -1,25 +1,49 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-
+import Dashboard from "./views/dashboard/Dashboard";
+import Login from "./views/Login";
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location, onResolve, onReject) {
+    if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+    return originalPush.call(this, location).catch(err => err)
+}
 Vue.use(Router)
-
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
+import before from './middleware/before'
+import redirect from './middleware/redirect'
+const router=  new Router({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: [
+        {
+            path: '/',
+            name:'/',
+            redirect:'/dashboard'
+        },
+        {
+            path: '/dashboard',
+            name: 'dashboard',
+            component: Dashboard
+        },
+        {
+            path: '/Login',
+            name: 'Login',
+            component: Login,
+            beforeEnter:redirect,
+            meta:{
+                guestGuard: true,
+            }
+        },
+        {
+            path: '/categories',
+            name: 'categories',
+            component: () => import(/* webpackChunkName: "about" */ './views/Category.vue')
+        },
+        {
+            path: '/saving_accounts',
+            name: 'saving_accounts',
+            component: () => import(/* webpackChunkName: "about" */ './views/SavingAccount.vue')
+        }
+    ]
 })
+router.beforeEach(before);
+export default router

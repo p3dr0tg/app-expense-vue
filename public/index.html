@@ -1,17 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" href="<%= BASE_URL %>css/font.css">
     <title>app-expenses</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but app-expenses doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+</head>
+<style>
+    button.toast-close-button{
+        position: absolute;
+        top:3px;
+        right: 3px;
+    }
+    .sk-loading {
+        /*position: relative;*/
+    }
+    .sk-loading:after {
+        content: '';
+        background-color: rgba(255, 255, 255, 0.7);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+    .sk-loading > .sk-spinner {
+        display: block;
+        position: absolute;
+        top: 40%;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+        margin: 0 auto;
+    }
+</style>
+<body>
+<noscript>
+    <strong>We're sorry but app-expenses doesn't work properly without JavaScript enabled. Please enable it to
+        continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
 </html>
