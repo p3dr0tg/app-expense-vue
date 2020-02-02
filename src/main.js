@@ -12,9 +12,8 @@ require('toastr/build/toastr.min.css')
 Vue.config.productionTip = false
 let app=null;
 window.axios = require('axios');
-const config =require('../config');
 const base = window.axios.create({
-    baseURL: config.url,
+    baseURL: process.env.VUE_APP_ROOT_API,
 })
 /***/
 
