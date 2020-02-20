@@ -57,7 +57,6 @@
 
 <script>
     import Vue from 'vue'
-    import firebase from 'firebase';
     import VueModal from "../components/VueModal";
     import MaterialSelect from "../components/MaterialSelect";
     export default {

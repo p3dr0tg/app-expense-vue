@@ -7,7 +7,7 @@
             <material-collection>
                 <li class="collection-item avatar item-summary" v-for="(row,index) in rows" :key="index">
                     <span class="title left">{{row.date|dateFormat}}</span>
-                    <div class="left progress progress-span">
+                    <div class="left collection-progress progress-span">
                         <div class="progress-bar progress-bar-success" role="progressbar"  :style="{ width: progress[index] + '%' }"></div>
                     </div>
                     <div style="clear: both;margin-bottom: -.5em;">
@@ -76,18 +76,14 @@
         min-height: 40px !important;
         padding: 5px 20px;
     }
-    .progress-span{
-        margin-left: 1em;
-        width: 93%;
-        margin-bottom: -5em;
-    }
-    .progress{
+
+    .collection-progress{
         border-radius: 0;
         box-shadow: none;
         background: #f44336;
         height: 20px;
     }
-    .progress{
+    .collection-progress{
         display: flex;
         height: 1rem;
         overflow: hidden;
@@ -95,7 +91,7 @@
         background-color:#f44336;
         border-radius: .25rem;
     }
-    .progress .progress-bar {
+    .collection-progress .progress-bar {
         vertical-align: middle;
         display: -ms-flexbox;
         display: flex;
@@ -105,7 +101,7 @@
         -ms-flex-align: center;
         align-items: center;
     }
-    .progress .progress-bar.progress-bar-success {
+    .collection-progress .progress-bar.progress-bar-success {
         background-color: #4caf50;
     }
     .progress-bar {
@@ -131,4 +127,5 @@
         font-weight: 600;
         padding-left: .5em;
     }
+
 </style>

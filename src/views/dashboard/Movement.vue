@@ -8,7 +8,7 @@
                 <li class="collection-item avatar" v-for="(row,index) in rows" :key="index">
                     <span class="title left">{{row.categories.description}}</span>
                     <p class="left" style="clear: both"><b>{{row.date|dateFormat}}</b> {{row.description}}</p>
-                    <a href="#!" class="secondary-content">{{row.amount|numberFormat}}</a>
+                    <a href="#!" class="secondary-content" :class="classItem[index]">{{row.amount|numberFormat}}</a>
                 </li>
             </material-collection>
         </div>
@@ -78,7 +78,7 @@
                 </form>
             </div>
             <template slot="footer">
-                <a href="#" class="modal-close red darken-3 waves-effect waves-light btn-small"><i class="material-icons left">close</i>Cerrar</a>
+                <a href="#" class="modal-close red darken-3 waves-effect waves-light btn-small" @click.prevent="resetForm"><i class="material-icons left">close</i>Cerrar</a>
                 <a href="#" class="blue darken-4 waves-effect waves-light btn-small" @click.prevent="onSave" ><i class="material-icons left">save</i>Guardar</a>
             </template>
         </vue-modal>
@@ -136,8 +136,18 @@
         computed:{
             filteredCategory(){
                return this.categoryList.filter((item)=>{
-                   return item.type==this.type_category
+                   return item.type===this.type_category
                })
+            },
+            classItem(){
+                return this.rows.map((item)=>{
+                    let amount=Number(item.amount)
+                    let className='green-text';
+                    if(amount<0){
+                        className='red-text'
+                    }
+                    return className;
+                })
             }
         },
         methods:{
@@ -189,12 +199,17 @@
                     this.$refs.dlgMovement.close();
                     this.alertSuccess('datos guardados');
                     this.getAll();
+                    this.resetForm();
                 }).catch((error) => {
                     console.log(error);
                 }).finally(()=>{
                     this.loading=false
                 })
             },
+            resetForm(){
+                this.form.amount=0;
+                this.form.description='';
+            }
         }
     }
 </script>
