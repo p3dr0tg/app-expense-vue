@@ -28,6 +28,7 @@ export const store = new Vuex.Store({
             localStorage.setItem('app_expense_user', JSON.stringify(user));
         },
         logout(state) {
+            console.log('logout mutations ',state)
             Vue.set(state.auth, 'isAuth', false);
             Vue.set(state.auth, 'user', null);
             localStorage.setItem('app_expense_is_auth', false);
@@ -47,10 +48,12 @@ export const store = new Vuex.Store({
                 commit('guestState', false);
             }
         },
-        auth_logout({commit, dispatch}) {
+        authLogout({commit, dispatch, getters}) {
+            console.log('auth_logout_actions');
             return new Promise((resolve, reject) => {
-                commit('auth_logout')
+               // commit('auth_logout')
                 commit('logout')
+                commit('guestState', true);
                 resolve()
             })
         }

@@ -7,10 +7,7 @@
 
 <style>
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
         color: #2c3e50;
     }
 
@@ -37,10 +34,9 @@
             this.$http.interceptors.response.use(undefined, (err) => {
                 return new Promise((resolve, reject) => {
                     if (err.response.status == 401 && err.config && err.config.__isRetryRequest == undefined) {
-                        this.auth_logout();
-                        //this.$router.push({ name: 'Login' });
-                       // this.$store.dispatch('auth_logout','');
-                        //window.location.reload();
+                        console.log('error 401');
+                        this.authLogout();
+                        this.$router.push({name: 'Login'})
                     }
                     if (err.response.status == 403 && err.config && err.config.__isRetryRequest == undefined) {
                         this.$router.push({name:'unauthorized'});
@@ -54,7 +50,7 @@
             ...mapState(['auth']),
         },
         methods:{
-            ...mapActions(['auth_logout']),
+            ...mapActions(['authLogout']),
         }
     }
 </script>

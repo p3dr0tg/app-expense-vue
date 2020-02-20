@@ -12,6 +12,7 @@
         },
         mounted() {
             M.Datepicker.init(this.$el,{
+                container: 'body',
                 autoClose:true,
                 i18n:{
                     cancel:'Cancelar',

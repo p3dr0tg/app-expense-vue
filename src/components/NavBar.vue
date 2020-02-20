@@ -2,9 +2,9 @@
     <div>
         <nav class="" role="navigation">
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo"><i class="material-icons">cloud</i>{{auth.user.email}}</a>
+                <a href="javascript:void(0);" @click="routeTo('dashboard')" class="brand-logo"><i class="material-icons">cloud</i>{{auth.user.email}}</a>
                 <ul class="right">
-                    <li ><a href="javascript:void(0);" title="cerrar session" @click="logout" class="logout" ><i class="material-icons">phonelink_off</i></a></li>
+                    <li ><a href="javascript:void(0);" title="cerrar session" @click="onLogout" class="logout" ><i class="material-icons">phonelink_off</i></a></li>
                     <li><a href="javascript:void(0);" data-target="slide-out" id="menu-navbar"  class="sidenav-trigger"><i class="material-icons">menu</i></a></li>
                 </ul>
             </div>
@@ -14,7 +14,7 @@
                 <div class="user-view">
                     <div class="background">
                     </div>
-                    <a href="#name"><span class="white-text name">Admin</span></a>
+                    <a href="#name"><span class="white-text name">{{auth.user.email}}</span></a>
                     <a href="#email"><span class="white-text email">admin@gmail.com</span></a>
                 </div>
             </li>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import {mapState, mapMutations} from 'vuex';
+    import {mapState, mapMutations,mapActions} from 'vuex';
     export default {
         name: "NavBar",
         mounted() {
@@ -62,7 +62,10 @@
                 this.$router.push({name:route});
 
             },
-            ...mapMutations(['logout']),
+            onLogout(){
+                this.authLogout();
+            },
+            ...mapActions(['authLogout']),
         },
         computed: {
             ...mapState(['auth']),

@@ -45,7 +45,7 @@
         computed:{
             progress(){
                 return this.rows.map((item)=>{
-                    let total=Number(item.income)+Number(item.expenses)
+                    let total=Number(item.income)+Number(item.expenses*-1)
                     let percentage=0;
                     if(item.income==0){
                         return 0;

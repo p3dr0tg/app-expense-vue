@@ -103,6 +103,7 @@
         data(){
             return{
                 loading:false,
+                filterDate:{},
                 form:{
                     category_id:null,
                     saving_account_id:null,
@@ -153,7 +154,7 @@
         methods:{
             
             getAll(date){
-
+                Vue.set(this.$data,'filterDate',date);
                 this.$http.get('movements',{
                     params:{
                         month:date.month,
@@ -198,7 +199,7 @@
                 }).then((res) => {
                     this.$refs.dlgMovement.close();
                     this.alertSuccess('datos guardados');
-                    this.getAll();
+                    this.getAll(this.filterDate);
                     this.resetForm();
                 }).catch((error) => {
                     console.log(error);

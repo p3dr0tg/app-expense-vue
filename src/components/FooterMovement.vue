@@ -19,6 +19,7 @@
         bottom: 0;
         width: 100%;
         padding-top: 0;
+       /* background-color: #3b4c55;*/
     }
     .page-footer .footer-copyright{
         min-height: 40px;

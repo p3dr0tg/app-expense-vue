@@ -1,5 +1,5 @@
 <template>
-    <div :id="idModal" class="modal " >
+    <div :id="idModal" class="modal modal-fixed-footer" >
         <div :class="{'sk-loading':loading}">
             <spinner v-if="loading"></spinner>
             <div class="modal-header">
@@ -99,6 +99,6 @@
         padding-right: 8px;
     }
     .modal-footer .btn-small{
-        margin: 6px .1em;
+        margin: 6px .1em !important;
     }
 </style>
