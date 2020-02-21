@@ -34,5 +34,15 @@
 </script>
 
 <style scoped>
+    .tabs .tab a.active{
+        color:#395280;
+    }
+    .tabs .tab a:focus, .tabs .tab a:focus.active {
+        background-color: rgba(13, 34, 66, 0.2);
+        outline: none;
+    }
+    .tabs .tab a {
+     color: #039be5;
+    }
 
 </style>

@@ -74,6 +74,9 @@
 </script>
 
 <style scoped>
+    nav{
+        background-color: #607d8b;
+    }
     .sidenav-trigger{
         display: block;
     }

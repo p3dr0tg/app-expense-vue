@@ -5,7 +5,8 @@ import guest from './guest';
 import {store} from './../store';
 export default (to, from, next) => {
     if (!to.matched.length) {
-        next('/404');
+        next({name: 'Login'});
+        //next('/404');
         return;
     }
     //const currentUser = firebase.auth().currentUser;

@@ -1,7 +1,8 @@
 <template>
     <footer class="page-footer">
         <div class="footer-copyright ">
-            <span class="span-total center-align">{{total|numberFormat}}</span>
+            <span style="position: absolute;font-weight: 600;font-size: 15px;left: 1%;">Saldo</span>
+            <span class="span-total center-align">S/ {{total|numberFormat}}</span>
         </div>
     </footer>
 </template>
@@ -19,13 +20,13 @@
         bottom: 0;
         width: 100%;
         padding-top: 0;
-       /* background-color: #3b4c55;*/
+        background-color: #607d8b;
     }
     .page-footer .footer-copyright{
         min-height: 40px;
     }
     .span-total{
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 700;
         position: relative;
         left: 50%;

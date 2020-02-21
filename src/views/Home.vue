@@ -2,12 +2,10 @@
     <div id="wrapper" v-if="auth.isAuth">
         <nav-bar></nav-bar>
         <div id="page-wrapper" class="gray-bg dashbard-1">
-            <div class="row border-bottom">
 
-            </div>
             <div class="row">
                 <div class="col s12">
-                    <div class="wrapper wrapper-content" style="padding: 0px 0px 40px;">
+                    <div class="wrapper wrapper-content" style="padding: 1px 0px 30px;">
                         <router-view></router-view>
                     </div>
                 </div>

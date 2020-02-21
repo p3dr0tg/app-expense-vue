@@ -21,7 +21,7 @@
             </div>
 
         </form>
-        <div class="row">
+        <div class="row center">
             <a class="waves-effect waves-light btn" @click.prevent="onLogin" v-if="isLogin">Ingresar</a>
             <a class="waves-effect waves-light btn" @click.prevent="onsignUp" v-if="!isLogin">Registar</a>
         </div>

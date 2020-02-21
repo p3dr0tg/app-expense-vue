@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="fixed-action-btn">
-            <a class="btn-floating btn-large waves-effect waves-light red" @click.prevent="add"><i class="material-icons">add</i></a>
+            <a class="btn-floating btn-large waves-effect waves-light light-blue" @click.prevent="add"><i class="material-icons">add</i></a>
         </div>
         <vue-modal ref="dlgCategory">
             <template slot="title">Categoria</template>

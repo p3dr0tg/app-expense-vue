@@ -1,6 +1,6 @@
 {
-    "name": "app-expenses",
-    "short_name": "app-expenses",
+    "name": "App Gastos Personales",
+    "short_name": "App Gastos",
     "icons": [
         {
             "src": "./img/icons/android-chrome-192x192.png",
