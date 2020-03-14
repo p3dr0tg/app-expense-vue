@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" style="margin-bottom: 0;">
         <div class="input-field col s5">
             <select-month v-model="month"></select-month>
         </div>

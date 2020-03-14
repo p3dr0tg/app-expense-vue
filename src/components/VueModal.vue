@@ -8,7 +8,7 @@
                     <slot name="title"></slot>
                 </h5>
             </div>
-            <div class="modal-content">
+            <div class="modal-content scroll-content">
                 <slot></slot>
             </div>
             <div class="modal-footer">

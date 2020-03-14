@@ -3,14 +3,15 @@
         <div class="col s12">
             <filter-movement @click="getData"></filter-movement>
         </div>
-        <div class="col s12">
+        <div class="col s12" :class="{'sk-loading':loading}">
+            <spinner v-if="loading"></spinner>
             <material-collection>
                 <li class="collection-item avatar item-summary" v-for="(row,index) in rows" :key="index">
                     <span class="title left">{{row.date|dateFormat}}</span>
-                    <div class="left collection-progress progress-span">
+                    <div class="left collection-progress">
                         <div class="progress-bar progress-bar-success" role="progressbar"  :style="{ width: progress[index] + '%' }"></div>
                     </div>
-                    <div style="clear: both;margin-bottom: -.5em;">
+                    <div style="clear: both;margin-bottom: -.5em;text-align: center">
                         <label class="income">{{row.income|numberFormat}}</label>
                         <label class="expenses">{{row.expenses|numberFormat}}</label>
                     </div>
@@ -33,7 +34,8 @@
         data(){
             return{
                 rows:[],
-                total:0
+                total:0,
+                loading:false
             }
         },
         mounted(){
@@ -57,6 +59,7 @@
         },
         methods:{
             getData(date){
+                this.loading=true;
                 this.$http.get('movements/summary',{
                     params:{
                         month:date.month,
@@ -65,6 +68,8 @@
                 }).then((res)=>{
                     Vue.set(this.$data,'rows',res.data.rows);
                     this.$store.commit('setTotal', res.data.total.amount)
+                }).finally(()=>{
+                    this.loading=false;
                 })
             }
         }

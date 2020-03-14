@@ -20,11 +20,14 @@
 
             select.value=this.value;
             select.onchange =function () {
-                    vm.$emit('input', this.value);
+                vm.$emit('input', this.value);
             };
 
             //select.formSelect();
-            M.FormSelect.init(this.$el);
+            document.addEventListener('DOMContentLoaded', ()=> {
+                M.FormSelect.init(this.$el);
+            })
+
         },
         watch:{
             value(value) {

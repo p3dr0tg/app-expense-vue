@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=1.0,viewport-fit=cover">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="<%= BASE_URL %>css/font.css">
     <title>App Gastos</title>
 </head>
 <style>
+    .toast-close-button{
+        position: absolute;
+        right: .5em;
+        top: .3em;
+    }
+    #toast-container >div{
+        font-size: 15px;
+    }
+    .toast{
+        display: inherit;
+    }
     button.toast-close-button{
         position: absolute;
         top:3px;
@@ -17,6 +28,7 @@
     .sk-loading {
         /*position: relative;*/
     }
+    
     .sk-loading:after {
         content: '';
         background-color: rgba(255, 255, 255, 0.7);
@@ -36,55 +48,97 @@
         z-index: 2000;
         margin: 0 auto;
     }
+    .modal.modal-fixed-footer .modal-footer{
+        z-index: 1;
+    }
+    /*-------------------scroll---------------------------------*/
+    .scroll-content::-webkit-scrollbar {
+        width: 8px;
+        height: 2px;
+
+    }
+    .scroll-content::-webkit-scrollbar-thumb {
+        background: #b3b3b3;
+        border-radius: 4px;
+    }
+    .scroll-content::-webkit-scrollbar-thumb:hover {
+        background: #656262;
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Cambiamos el fondo cuando esté en active */
+    .scroll-content::-webkit-scrollbar-thumb:active {
+        background-color: #656262;
+    }
+    .scroll-content::-webkit-scrollbar-track {
+        background: #e1e1e1;
+        border-radius: 4px;
+    }
+
+    /* Cambiamos el fondo cuando esté en active o hover */
+    .scroll-content::-webkit-scrollbar-track:hover,
+    .scroll-content::-webkit-scrollbar-track:active {
+        background: #d4d4d4;
+    }
+
+    /*-------------------end scroll---------------------------------*/
     .modal.modal-fixed-footer {
         height: 80% !important;
     }
     /*
      progresss bar
     */
-    .progress-span{
+    .collection-progress{
         margin-left: 1em;
-        width: 93%;
+        width: 72%;
     }
-    @media only screen and (min-width : 150px) and (max-width : 430px) {
-        .progress-span{
-            width: 77%;
+    @media only screen and (min-width : 376px) and (max-width : 430px) {
+        .collection-progress{
+            width: 75%;
         }
     }
     @media only screen and (min-width : 431px) and (max-width : 530px) {
-        .progress-span{
+        .collection-progress{
             width: 80%;
         }
     }
     @media only screen and (min-width : 531px) and (max-width : 610px) {
 
-        .progress-span{
+        .collection-progress{
             width: 82%;
         }
     }
     @media only screen and (min-width : 611px) and (max-width : 700px) {
 
-        .progress-span{
+        .collection-progress{
             width: 82%;
         }
     }
     @media only screen and (min-width : 701px) and (max-width : 715px) {
 
-        .progress-span{
+        .collection-progress{
             width: 85%;
         }
     }
     @media only screen and (min-width : 716px) and (max-width : 992px) {
 
-        .progress-span{
+        .collection-progress{
             width: 87%;
         }
     }
     @media only screen and (min-width : 993px) and (max-width : 1228px) {
 
-        .progress-span{
+        .collection-progress{
             width: 91%;
         }
+    }
+    @media only screen and (min-width : 1229px)  {
+        .collection-progress{
+            width: 93%;
+        }
+    }
+    .select-dropdown{
+        z-index: 100;
     }
 </style>
 <body>

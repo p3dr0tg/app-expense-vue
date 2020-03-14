@@ -3,7 +3,8 @@
         <div class="col s12">
             <filter-movement @click="getAll"></filter-movement>
         </div>
-        <div class="col s12">
+        <div class="col s12" :class="{'sk-loading':loading_index}">
+            <spinner v-if="loading_index"></spinner>
             <material-collection>
                 <li class="collection-item avatar" v-for="(row,index) in rows" :key="index">
                     <span class="title left">{{row.categories.description}}</span>
@@ -95,14 +96,17 @@
     import MaterialDate from "../../components/MaterialDate";
     import FilterMovement from "../../components/FilterMovement";
     import MaterialCollection from "../../components/MaterialCollection";
+    import Spinner from "../../components/Spinner";
     export default {
         name: "Movement",
         components: {
+            Spinner,
             MaterialCollection,
             FilterMovement, MaterialDate, MaterialSelect, VueModal, SelectYear, SelectMonth},
         data(){
             return{
                 loading:false,
+                loading_index:false,
                 filterDate:{},
                 form:{
                     category_id:null,
@@ -154,6 +158,7 @@
         methods:{
             
             getAll(date){
+                this.loading_index=true;
                 Vue.set(this.$data,'filterDate',date);
                 this.$http.get('movements',{
                     params:{
@@ -164,7 +169,7 @@
                     Vue.set(this.$data,'rows',res.data.rows)
                     this.$store.commit('setTotal', res.data.total.amount)
                     
-                })
+                }).finally(()=>this.loading_index=false)
             },
             getCategories(){
                 this.$http.get('categories').then((res)=>{

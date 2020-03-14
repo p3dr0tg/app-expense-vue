@@ -1,5 +1,5 @@
 <template>
-    <div class="responsive-table content-collection">
+    <div class="responsive-table content-collection scroll-content">
         <ul class="collection">
             <slot></slot>
         </ul>
@@ -14,7 +14,7 @@
 
 <style scoped>
     .content-collection{
-        height: 320px;
+        height: 60vh;/*320*/
         overflow-y: auto;
     }
     .collection .collection-item.avatar{

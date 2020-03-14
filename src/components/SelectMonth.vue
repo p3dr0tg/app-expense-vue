@@ -22,6 +22,7 @@
 
             select.value=this.value;
             select.onchange =function () {
+
                 vm.$emit('input', this.value);
             };
         },
