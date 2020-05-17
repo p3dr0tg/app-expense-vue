@@ -12,10 +12,13 @@
         <ul id="slide-out" class="sidenav">
             <li>
                 <div class="user-view">
-                    <div class="background">
+                    <div class="background" style="background: rgb(43, 69, 81)">
                     </div>
+                    <a href="#user">
+                        <img class="circle" src="./../assets/avatar.png">
+                    </a>
                     <a href="#name"><span class="white-text name">{{auth.user.email}}</span></a>
-                    <a href="#email"><span class="white-text email">admin@gmail.com</span></a>
+                    <a href="#email"><span class="white-text email"></span></a>
                 </div>
             </li>
             <li>

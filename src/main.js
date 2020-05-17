@@ -15,6 +15,7 @@ window.axios = require('axios');
 const base = window.axios.create({
     baseURL: process.env.VUE_APP_ROOT_API,
 })
+
 /***/
 
 

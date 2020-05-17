@@ -13,7 +13,9 @@
         <div id="test2" class="col s12">
             <movement></movement>
         </div>
-        <div id="test3" class="col s12">Test 3</div>
+        <div id="test3" class="col s12">
+            <categories></categories>
+        </div>
         <footer-movement :total="total"></footer-movement>
     </div>
 
@@ -24,9 +26,10 @@
     import Movement from "./Movement";
     import Summaries from "./Summaries";
     import FooterMovement from "../../components/FooterMovement";
+    import Categories from "./Categories";
     export default {
         name: "Dashboard",
-        components: {Summaries, Movement,FooterMovement},
+        components: {Categories, Summaries, Movement,FooterMovement},
         computed:{
             ...mapState(['total'])
         }

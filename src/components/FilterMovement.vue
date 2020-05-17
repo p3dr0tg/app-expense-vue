@@ -7,7 +7,7 @@
             <select-year v-model="year"></select-year>
         </div>
         <div class="input-field col s2" style="margin-top: 1.5em;">
-            <button  class="waves-effect waves-light btn btn-small light-blue" @click.prevent="onClick"><i class="material-icons left">find_in_page</i></button>
+            <button  class="waves-effect waves-light btn btn-small light-blue" @click.prevent="onClick"><i class="material-icons ">find_in_page</i></button>
         </div>
     </div>
 </template>

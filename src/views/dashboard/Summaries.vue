@@ -122,15 +122,6 @@
         background-color: #007bff;
         transition: width .6s ease;
     }
-    .income{
-        color:#4caf50;
-        font-weight: 600;
-        padding-right: .5em;
-    }
-    .expenses{
-        color:#f44336;
-        font-weight: 600;
-        padding-left: .5em;
-    }
+
 
 </style>

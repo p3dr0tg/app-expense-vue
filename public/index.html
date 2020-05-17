@@ -51,9 +51,19 @@
     .modal.modal-fixed-footer .modal-footer{
         z-index: 1;
     }
+    .income{
+        color:#4caf50;
+        font-weight: 600;
+        padding-right: .5em;
+    }
+    .expenses{
+        color:#f44336;
+        font-weight: 600;
+        padding-left: .5em;
+    }
     /*-------------------scroll---------------------------------*/
     .scroll-content::-webkit-scrollbar {
-        width: 8px;
+        width: 7px;
         height: 2px;
 
     }
@@ -90,11 +100,11 @@
     */
     .collection-progress{
         margin-left: 1em;
-        width: 72%;
+        width: 64%;
     }
     @media only screen and (min-width : 376px) and (max-width : 430px) {
         .collection-progress{
-            width: 75%;
+            width: 72%;
         }
     }
     @media only screen and (min-width : 431px) and (max-width : 530px) {
@@ -123,22 +133,128 @@
     @media only screen and (min-width : 716px) and (max-width : 992px) {
 
         .collection-progress{
-            width: 87%;
+            width: 85%;
         }
     }
     @media only screen and (min-width : 993px) and (max-width : 1228px) {
 
         .collection-progress{
-            width: 91%;
+            width: 89%;
         }
     }
     @media only screen and (min-width : 1229px)  {
         .collection-progress{
-            width: 93%;
+            width: 92%;
         }
     }
     .select-dropdown{
         z-index: 100;
+    }
+    .selectable{
+        cursor: pointer;
+    }
+    /*COLLECTION CSS*/
+    .collection .collection-item.avatar{
+        padding-left: .5em !important;
+        min-height: 65px !important;
+    }
+    .collection .collection-item.avatar .title {
+        font-size: 14px !important;
+        font-weight: 600;
+    }
+    .collection .collection-item.avatar p {
+        font-size: 13px;
+    }
+    .secondary-content{
+        font-weight: bold;
+    }
+    /*COLLECTION CSS*/
+
+
+
+    .swipeout-action {
+        display: flex;
+        align-items: center;
+        padding: 0 1.2rem;
+        cursor: pointer;
+        left: 0;
+    }
+
+    .swipeout-action.blue {
+        color: white;
+        background-color: rgb(0, 122, 255);
+    }
+    .swipeout-action.blue:hover {
+        background: darken(rgb(0, 122, 255), 5%);
+    }
+    .swipeout-action.purple {
+        color: white;
+        background: rgb(88, 86, 214);
+    }
+    .swipeout-action.purple:hover {
+        background-color: darken(rgb(88, 86, 214), 5%);
+    }
+    .swipeout-action.red {
+        color: white;
+        background-color: rgb(255, 59, 48);
+    }
+    .swipeout-action.red:hover {
+        background-color: darken(rgb(255, 59, 48), 5%);
+    }
+    .swipeout-action.green {
+        color: white;
+        background-color: rgb(76, 217, 100);
+    }
+    .swipeout-action.green:hover {
+        background-color: darken(rgb(76, 217, 100), 5%);
+    }
+    .swipeout-list-item {
+        flex: 1;
+        border-bottom: 1px solid lightgray;
+    }
+    .swipeout-list-item:last-of-type {
+        border-bottom: none;
+    }
+    .card {
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: none;
+        border: 1px solid lightgray;
+    }
+    .card-content {
+        padding: 1rem;
+    }
+    .transition-right {
+        transform: translate3d(100%, 0 ,0) !important;
+    }
+    .transition-left {
+        transform: translate3d(-100%, 0 ,0) !important;
+    }
+    .toolbar {
+        display: flex;
+        align-items: center;
+    }
+    .toolbar .toolbar-section {
+        flex: 0 0 auto;
+    }
+    .toolbar .toolbar-section--center {
+        flex: 1000 1 0%;
+    }
+    .swipeout {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .swipeout-right {
+        right: 0;
+        transform: translateX(100%);
+    }
+    .swipeout-left, .swipeout-right {
+        position: absolute;
+        height: 100%;
+        display: flex;
+        z-index: 1;
     }
 </style>
 <body>

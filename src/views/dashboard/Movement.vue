@@ -6,11 +6,34 @@
         <div class="col s12" :class="{'sk-loading':loading_index}">
             <spinner v-if="loading_index"></spinner>
             <material-collection>
-                <li class="collection-item avatar" v-for="(row,index) in rows" :key="index">
+                <swipe-list
+                    ref="list"
+
+                    :items="rows"
+                    item-key="id"
+                    :disabled="false"
+                >
+                    <template v-slot="{ item, index,revealRight, close }" >
+                        <li class="card-content collection-item avatar selectable" >
+                            <span class="title left">{{item.category.description}}</span>
+                            <p class="left" style="clear: both"><b>{{item.date|dateFormat}}</b> {{item.description}}</p>
+                            <a href="#!" class="secondary-content" :class="classItem[index]">{{item.amount|numberFormat}}</a>
+                        </li>
+                    </template>
+                    <template v-slot:right="{ item,index }">
+                        <div class="swipeout-action light-blue" @click.prevent="onEdit(index)">
+                            <i class="material-icons" style="color: white;">edit</i>
+                        </div>
+                        <!--<div class="swipeout-action red">
+                            <i class="material-icons">delete_forever</i>
+                        </div>-->
+                    </template>
+                </swipe-list>
+               <!-- <li class="collection-item avatar selectable" v-for="(row,index) in rows" :key="index">
                     <span class="title left">{{row.categories.description}}</span>
                     <p class="left" style="clear: both"><b>{{row.date|dateFormat}}</b> {{row.description}}</p>
                     <a href="#!" class="secondary-content" :class="classItem[index]">{{row.amount|numberFormat}}</a>
-                </li>
+                </li>-->
             </material-collection>
         </div>
     
@@ -18,7 +41,7 @@
             <a  class="btn-floating btn-large waves-effect waves-light light-blue" @click.prevent="add"><i class="material-icons">add</i></a>
         </div>
         <vue-modal ref="dlgMovement" :loading="loading">
-            <template slot="title">Movimiento</template>
+            <template slot="title">Movimiento {{title}}</template>
             <div class="row">
                 <form class="col s12">
                     <div class="row">
@@ -51,7 +74,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <material-date date-format="dd/mm/yyyy" @input="onDate"></material-date>
+                            <material-date date-format="dd/mm/yyyy" @input="onDate" ref="date"></material-date>
                             <label >Fecha</label>
                         </div>
                     </div>
@@ -88,6 +111,7 @@
 
 <script>
     import Vue from 'vue'
+    import { SwipeList, SwipeOut } from 'vue-swipe-actions';
     import { mapMutations } from 'vuex'
     import SelectMonth from "../../components/SelectMonth";
     import SelectYear from "../../components/SelectYear";
@@ -97,26 +121,31 @@
     import FilterMovement from "../../components/FilterMovement";
     import MaterialCollection from "../../components/MaterialCollection";
     import Spinner from "../../components/Spinner";
+    const initFromData = {
+        id:-1,
+        category_id:null,
+        saving_account_id:1,
+        month:1,
+        date:'',
+        amount:0,
+        description:'',
+        user:null,
+    };
     export default {
         name: "Movement",
         components: {
+            SwipeList,
+            SwipeOut,
             Spinner,
             MaterialCollection,
             FilterMovement, MaterialDate, MaterialSelect, VueModal, SelectYear, SelectMonth},
         data(){
             return{
+                title:'Nuevo',
                 loading:false,
                 loading_index:false,
                 filterDate:{},
-                form:{
-                    category_id:null,
-                    saving_account_id:null,
-                    month:1,
-                    date:'',
-                    amount:0,
-                    description:'',
-                    user:null,
-                },
+                form: Object.assign({}, initFromData),
                 type_category:'Ingresos',
                 categoryList:[],
                 accountList:[],
@@ -127,7 +156,7 @@
             }
         },
         created(){
-            this.form.month=this.now().getMonth()+1;
+
             this.store = this.$route.name;
             this.getCategories();
             this.getAccounts();
@@ -185,11 +214,12 @@
                 })
             },
             onDate(e){
-
                 Vue.set(this.form, 'date', e.target.value)
             },
             add(){
+                this.title='Nuevo';
                 this.method='POST';
+                this.resetForm();
                 this.$refs.dlgMovement.open();
             },
             onSave(){
@@ -212,10 +242,45 @@
                     this.loading=false
                 })
             },
+            onEdit(index){
+                this.title='Editar';
+                this.$refs.list.closeActions(index);
+                this.resetForm();
+                this.loading_index=true;
+                this.$http.get('movements/'+this.rows[index].id).then((res) => {
+                    let data = res.data;
+                    this.setForm(data);
+                    this.$refs.dlgMovement.open();
+                }).catch((error) => {
+                    console.log(error);
+                }).finally(()=>{
+                    this.loading_index=false;
+                })
+            },
+            onDestroy(index){
+                this.$refs.list.closeActions(index);
+                if(confirm('deseas eliminar el registro?')){
+
+                }
+            },
+            setForm(data){
+                this.type_category=data.category.type;
+                if(data.amount<0){
+                    console.log('negativo');
+                    data.amount=data.amount*-1;
+                }
+                Object.keys(this.form).forEach((key)=>{
+                    if(data[key]){
+                        this.form[key]=data[key];
+                    }
+                });
+                this.$refs.date.setDate(data.date);
+
+            },
             resetForm(){
-                this.form.amount=0;
-                this.form.description='';
-            }
+                Vue.set(this.$data, 'form', Object.assign({}, initFromData));
+                this.form.month=this.now().getMonth()+1;
+            },
         }
     }
 </script>
@@ -223,9 +288,9 @@
 <style scoped>
 
 
-
     .btn-small{
         padding-right: 8px;
     }
+
 
 </style>

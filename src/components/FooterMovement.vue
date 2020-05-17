@@ -29,6 +29,6 @@
         font-size: 24px;
         font-weight: 700;
         position: relative;
-        left: 50%;
+        margin: 0 auto;
     }
 </style>

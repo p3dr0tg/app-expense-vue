@@ -5,7 +5,7 @@
 
             <div class="row">
                 <div class="col s12">
-                    <div class="wrapper wrapper-content" style="padding: 1px 0px 30px;">
+                    <div class="wrapper wrapper-content" style="padding: 1px 0px 0px;">
                         <router-view></router-view>
                     </div>
                 </div>
