@@ -1,4 +1,15 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><link rel=stylesheet href=/css/font.css><title>App Gastos</title><link href=/js/about.3582672e.js rel=prefetch><link href=/css/app.50faa556.css rel=preload as=style><link href=/css/chunk-vendors.b749ab74.css rel=preload as=style><link href=/js/app.11c9e687.js rel=preload as=script><link href=/js/chunk-vendors.1de2def4.js rel=preload as=script><link href=/css/chunk-vendors.b749ab74.css rel=stylesheet><link href=/css/app.50faa556.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=/img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/icons/favicon-16x16.png><link rel=manifest href=/manifest.json><meta name=theme-color content=#4DBA87><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=app-expenses><link rel=apple-touch-icon href=/img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=/img/icons/safari-pinned-tab.svg color=#4DBA87><meta name=msapplication-TileImage content=/img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#000000></head><style>button.toast-close-button{
+<!DOCTYPE html><html lang=es><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><link rel=stylesheet href=/css/font.css><title>App Gastos</title><link href=/js/about.7ede6f65.js rel=prefetch><link href=/css/app.e3d7f977.css rel=preload as=style><link href=/css/chunk-vendors.b749ab74.css rel=preload as=style><link href=/js/app.5b30e165.js rel=preload as=script><link href=/js/chunk-vendors.bf5a73ba.js rel=preload as=script><link href=/css/chunk-vendors.b749ab74.css rel=stylesheet><link href=/css/app.e3d7f977.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=/img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/icons/favicon-16x16.png><link rel=manifest href=/manifest.json><meta name=theme-color content=#4DBA87><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=app-expenses><link rel=apple-touch-icon href=/img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=/img/icons/safari-pinned-tab.svg color=#4DBA87><meta name=msapplication-TileImage content=/img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#000000></head><style>.toast-close-button{
+        position: absolute;
+        right: .5em;
+        top: .3em;
+    }
+    #toast-container >div{
+        font-size: 15px;
+    }
+    .toast{
+        display: inherit;
+    }
+    button.toast-close-button{
         position: absolute;
         top:3px;
         right: 3px;
@@ -6,6 +17,7 @@
     .sk-loading {
         /*position: relative;*/
     }
+    
     .sk-loading:after {
         content: '';
         background-color: rgba(255, 255, 255, 0.7);
@@ -25,53 +37,211 @@
         z-index: 2000;
         margin: 0 auto;
     }
+    .modal.modal-fixed-footer .modal-footer{
+        z-index: 1;
+    }
+    .income{
+        color:#4caf50;
+        font-weight: 600;
+        padding-right: .5em;
+    }
+    .expenses{
+        color:#f44336;
+        font-weight: 600;
+        padding-left: .5em;
+    }
+    /*-------------------scroll---------------------------------*/
+    .scroll-content::-webkit-scrollbar {
+        width: 7px;
+        height: 2px;
+
+    }
+    .scroll-content::-webkit-scrollbar-thumb {
+        background: #b3b3b3;
+        border-radius: 4px;
+    }
+    .scroll-content::-webkit-scrollbar-thumb:hover {
+        background: #656262;
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Cambiamos el fondo cuando esté en active */
+    .scroll-content::-webkit-scrollbar-thumb:active {
+        background-color: #656262;
+    }
+    .scroll-content::-webkit-scrollbar-track {
+        background: #e1e1e1;
+        border-radius: 4px;
+    }
+
+    /* Cambiamos el fondo cuando esté en active o hover */
+    .scroll-content::-webkit-scrollbar-track:hover,
+    .scroll-content::-webkit-scrollbar-track:active {
+        background: #d4d4d4;
+    }
+
+    /*-------------------end scroll---------------------------------*/
     .modal.modal-fixed-footer {
         height: 80% !important;
     }
     /*
      progresss bar
     */
-    .progress-span{
+    .collection-progress{
         margin-left: 1em;
-        width: 93%;
+        width: 64%;
     }
-    @media only screen and (min-width : 150px) and (max-width : 430px) {
-        .progress-span{
-            width: 77%;
+    @media only screen and (min-width : 376px) and (max-width : 430px) {
+        .collection-progress{
+            width: 72%;
         }
     }
     @media only screen and (min-width : 431px) and (max-width : 530px) {
-        .progress-span{
+        .collection-progress{
             width: 80%;
         }
     }
     @media only screen and (min-width : 531px) and (max-width : 610px) {
 
-        .progress-span{
+        .collection-progress{
             width: 82%;
         }
     }
     @media only screen and (min-width : 611px) and (max-width : 700px) {
 
-        .progress-span{
+        .collection-progress{
             width: 82%;
         }
     }
     @media only screen and (min-width : 701px) and (max-width : 715px) {
 
-        .progress-span{
+        .collection-progress{
             width: 85%;
         }
     }
     @media only screen and (min-width : 716px) and (max-width : 992px) {
 
-        .progress-span{
-            width: 87%;
+        .collection-progress{
+            width: 85%;
         }
     }
     @media only screen and (min-width : 993px) and (max-width : 1228px) {
 
-        .progress-span{
-            width: 91%;
+        .collection-progress{
+            width: 89%;
         }
-    }</style><body><noscript><strong>We're sorry but app-expenses doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/js/chunk-vendors.1de2def4.js></script><script src=/js/app.11c9e687.js></script></body></html>
+    }
+    @media only screen and (min-width : 1229px)  {
+        .collection-progress{
+            width: 92%;
+        }
+    }
+    .select-dropdown{
+        z-index: 100;
+    }
+    .selectable{
+        cursor: pointer;
+    }
+    /*COLLECTION CSS*/
+    .collection .collection-item.avatar{
+        padding-left: .5em !important;
+        min-height: 65px !important;
+    }
+    .collection .collection-item.avatar .title {
+        font-size: 14px !important;
+        font-weight: 600;
+    }
+    .collection .collection-item.avatar p {
+        font-size: 13px;
+    }
+    .secondary-content{
+        font-weight: bold;
+    }
+    /*COLLECTION CSS*/
+
+
+
+    .swipeout-action {
+        display: flex;
+        align-items: center;
+        padding: 0 1.2rem;
+        cursor: pointer;
+        left: 0;
+    }
+
+    .swipeout-action.blue {
+        color: white;
+        background-color: rgb(0, 122, 255);
+    }
+    .swipeout-action.blue:hover {
+        background: darken(rgb(0, 122, 255), 5%);
+    }
+    .swipeout-action.purple {
+        color: white;
+        background: rgb(88, 86, 214);
+    }
+    .swipeout-action.purple:hover {
+        background-color: darken(rgb(88, 86, 214), 5%);
+    }
+    .swipeout-action.red {
+        color: white;
+        background-color: rgb(255, 59, 48);
+    }
+    .swipeout-action.red:hover {
+        background-color: darken(rgb(255, 59, 48), 5%);
+    }
+    .swipeout-action.green {
+        color: white;
+        background-color: rgb(76, 217, 100);
+    }
+    .swipeout-action.green:hover {
+        background-color: darken(rgb(76, 217, 100), 5%);
+    }
+    .swipeout-list-item {
+        flex: 1;
+        border-bottom: 1px solid lightgray;
+    }
+    .swipeout-list-item:last-of-type {
+        border-bottom: none;
+    }
+    .card {
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: none;
+        border: 1px solid lightgray;
+    }
+    .card-content {
+        padding: 1rem;
+    }
+    .transition-right {
+        transform: translate3d(100%, 0 ,0) !important;
+    }
+    .transition-left {
+        transform: translate3d(-100%, 0 ,0) !important;
+    }
+    .toolbar {
+        display: flex;
+        align-items: center;
+    }
+    .toolbar .toolbar-section {
+        flex: 0 0 auto;
+    }
+    .toolbar .toolbar-section--center {
+        flex: 1000 1 0%;
+    }
+    .swipeout {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .swipeout-right {
+        right: 0;
+        transform: translateX(100%);
+    }
+    .swipeout-left, .swipeout-right {
+        position: absolute;
+        height: 100%;
+        display: flex;
+        z-index: 1;
+    }</style><body><noscript><strong>We're sorry but app-expenses doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/js/chunk-vendors.bf5a73ba.js></script><script src=/js/app.5b30e165.js></script></body></html>
