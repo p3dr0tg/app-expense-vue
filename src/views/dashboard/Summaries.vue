@@ -6,7 +6,7 @@
         <div class="col s12" :class="{'sk-loading':loading}">
             <spinner v-if="loading"></spinner>
             <material-collection>
-                <li class="collection-item avatar item-summary" v-for="(row,index) in rows" :key="index">
+                <li class="collection-item avatar item-summary selectable" v-for="(row,index) in rows" :key="index" @click.prevent="onDetail(index)">
                     <span class="title left">{{row.date|dateFormat}}</span>
                     <div class="left collection-progress">
                         <div class="progress-bar progress-bar-success" role="progressbar"  :style="{ width: progress[index] + '%' }"></div>
@@ -18,6 +18,14 @@
                 </li>
             </material-collection>
         </div>
+        <detail
+            ref="detail"
+            :title="title"
+            :show-category="true"
+            :show-date="false"
+        >
+
+        </detail>
        
 
     </div>
@@ -28,14 +36,17 @@
     import FilterMovement from "../../components/FilterMovement";
     import MaterialCollection from "../../components/MaterialCollection";
     import Spinner from "../../components/Spinner";
+    import Detail from "./Detail";
     export default {
         name: "Summaries",
-        components: {Spinner, MaterialCollection, FilterMovement},
+        components: {Detail, Spinner, MaterialCollection, FilterMovement},
         data(){
             return{
                 rows:[],
                 total:0,
-                loading:false
+                loading:false,
+                title:'',
+                filterDate:{}
             }
         },
         mounted(){
@@ -59,6 +70,7 @@
         },
         methods:{
             getData(date){
+                Vue.set(this.$data,'filterDate',date);
                 this.loading=true;
                 this.$http.get('movements/summary',{
                     params:{
@@ -71,6 +83,13 @@
                 }).finally(()=>{
                     this.loading=false;
                 })
+            },
+            onDetail(index){
+                console.log('click detalle',index);
+                const record=this.rows[index];
+                this.title='Fecha: '+record.date.split('-').reverse().join('/');
+                const filters='date:'+record.date;
+                this.$refs.detail.fetch(this.filterDate.month,this.filterDate.year,filters);
             }
         }
     }

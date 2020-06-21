@@ -5,36 +5,11 @@
         </div>
         <div class="col s12" :class="{'sk-loading':loading_index}">
             <spinner v-if="loading_index"></spinner>
-            <material-collection>
-                <swipe-list
-                    ref="list"
-
-                    :items="rows"
-                    item-key="id"
-                    :disabled="false"
-                >
-                    <template v-slot="{ item, index,revealRight, close }" >
-                        <li class="card-content collection-item avatar selectable" >
-                            <span class="title left">{{item.category.description}}</span>
-                            <p class="left" style="clear: both"><b>{{item.date|dateFormat}}</b> {{item.description}}</p>
-                            <a href="#!" class="secondary-content" :class="classItem[index]">{{item.amount|numberFormat}}</a>
-                        </li>
-                    </template>
-                    <template v-slot:right="{ item,index }">
-                        <div class="swipeout-action light-blue" @click.prevent="onEdit(index)">
-                            <i class="material-icons" style="color: white;">edit</i>
-                        </div>
-                        <!--<div class="swipeout-action red">
-                            <i class="material-icons">delete_forever</i>
-                        </div>-->
-                    </template>
-                </swipe-list>
-               <!-- <li class="collection-item avatar selectable" v-for="(row,index) in rows" :key="index">
-                    <span class="title left">{{row.categories.description}}</span>
-                    <p class="left" style="clear: both"><b>{{row.date|dateFormat}}</b> {{row.description}}</p>
-                    <a href="#!" class="secondary-content" :class="classItem[index]">{{row.amount|numberFormat}}</a>
-                </li>-->
-            </material-collection>
+            <list-view
+                :rows="rows"
+                @edit="onEdit"
+            >
+            </list-view>
         </div>
     
         <div class="fixed-action-btn">
@@ -95,8 +70,8 @@
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea id="textarea1" class="materialize-textarea" v-model="form.description"></textarea>
-                            <label for="textarea1">Descripcion</label>
+                            <textarea  class="materialize-textarea" v-model="form.description"></textarea>
+                            <label >Descripcion</label>
                         </div>
                     </div>
                 </form>
@@ -121,6 +96,7 @@
     import FilterMovement from "../../components/FilterMovement";
     import MaterialCollection from "../../components/MaterialCollection";
     import Spinner from "../../components/Spinner";
+    import ListView from "../../components/ListView";
     const initFromData = {
         id:-1,
         category_id:null,
@@ -134,6 +110,7 @@
     export default {
         name: "Movement",
         components: {
+            ListView,
             SwipeList,
             SwipeOut,
             Spinner,
@@ -173,16 +150,7 @@
                    return item.type===this.type_category
                })
             },
-            classItem(){
-                return this.rows.map((item)=>{
-                    let amount=Number(item.amount)
-                    let className='green-text';
-                    if(amount<0){
-                        className='red-text'
-                    }
-                    return className;
-                })
-            }
+
         },
         methods:{
             
@@ -244,13 +212,16 @@
             },
             onEdit(index){
                 this.title='Editar';
-                this.$refs.list.closeActions(index);
+                //this.$refs.list.closeActions(index);
                 this.resetForm();
                 this.loading_index=true;
                 this.$http.get('movements/'+this.rows[index].id).then((res) => {
                     let data = res.data;
                     this.setForm(data);
                     this.$refs.dlgMovement.open();
+                    setTimeout(()=>{
+                        M.updateTextFields();
+                    },1)
                 }).catch((error) => {
                     console.log(error);
                 }).finally(()=>{
@@ -279,6 +250,7 @@
             },
             resetForm(){
                 Vue.set(this.$data, 'form', Object.assign({}, initFromData));
+                this.$refs.date.clean();
                 this.form.month=this.now().getMonth()+1;
             },
         }

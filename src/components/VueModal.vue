@@ -3,7 +3,7 @@
         <div :class="{'sk-loading':loading}">
             <spinner v-if="loading"></spinner>
             <div class="modal-header">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="close modal-close">×</button>
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close modal-close" @click="close">×</button>
                 <h5>
                     <slot name="title"></slot>
                 </h5>

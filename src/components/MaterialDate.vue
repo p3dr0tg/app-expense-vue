@@ -16,6 +16,7 @@
             }
         },
         mounted() {
+
             this.instance=M.Datepicker.init(this.$el,{
                 container: 'body',
                 autoClose:true,
@@ -46,6 +47,9 @@
                 var newDate = new Date(parseInt(splitDate[0]),parseInt(splitDate[1])-1,parseInt(splitDate[2]))
                 this.instance.setDate(newDate,true);
                 this.$el.value=splitDate[2]+'/'+splitDate[1]+'/'+splitDate[0];
+            },
+            clean(){
+                this.$el.value='';
             }
         }
     }
