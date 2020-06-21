@@ -9,6 +9,7 @@
             <template v-slot="{ item, index,revealRight, close }" >
                 <li class="card-content collection-item avatar selectable" >
                     <span class="title left" v-if="showCategory">{{item.category.description}}</span>
+                    <span class="title left" v-else><br></span>
                     <p class="left" style="clear: both"><b v-if="showDate">{{item.date|dateFormat}}</b> {{item.description}}</p>
                     <a href="#!" class="secondary-content" :class="classItem[index]">{{item.amount|numberFormat}}</a>
                 </li>

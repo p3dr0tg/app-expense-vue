@@ -37,8 +37,8 @@
                 this.$refs.dlgDetail.close();
             },
             fetch(month,year,filters){
-                console.log('month',month);
-                console.log('year',year);
+                this.rows=[];
+                this.$refs.dlgDetail.open();
                 this.loading=true;
                 this.$http.get('movements',{
                     params:{
@@ -48,7 +48,7 @@
                     }
                 }).then((res)=>{
                     Vue.set(this.$data,'rows',res.data.rows);
-                    this.$refs.dlgDetail.open();
+
                     //this.$store.commit('setTotal', res.data.total.amount)
                 }).finally(()=>this.loading=false)
             }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.ac48c9861f9d8d277b1e16b9618a2c6d.js"
+  "/precache-manifest.36e5847815755b39f42c96b71f9ae415.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "app-expenses"});

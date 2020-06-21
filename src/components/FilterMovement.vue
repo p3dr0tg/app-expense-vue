@@ -31,7 +31,10 @@
         },
         methods:{
             onClick(){
-                this.$emit('click',this.$data)
+                this.$emit('click',{
+                    month:this.month,
+                    year:this.year
+                })
             }
         }
     }
