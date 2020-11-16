@@ -50,6 +50,7 @@
             },
             close(){
                 this.instance.close();
+                this.$emit('close');
             },
         }
     }
@@ -58,8 +59,8 @@
 <style scoped>
     .modal{
         overflow-x: hidden;
-        width: 96%;
-        max-height: 80%;
+        /*width: 96%;
+        max-height: 80%;*/
     }
     .modal-header{
         border-bottom: 1px solid rgba(0,0,0,0.1);

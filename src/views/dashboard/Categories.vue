@@ -69,8 +69,16 @@
                         year:date.year
                     }
                 }).then((res)=>{
-                    Vue.set(this.$data,'rows',res.data.rows)
-                    this.setGauge(res.data.totals)
+                    let data=res.data;
+                    let rows=data.rows;
+                    rows.unshift({
+                        category_id:0,
+                        amount:data.previous_balance.amount,
+                        category:'Saldo Anterior',
+                        type:"Ingresos"
+                    });
+                    Vue.set(this.$data,'rows',rows)
+                    this.setGauge(data.totals)
                     //this.$store.commit('setTotal', res.data.total.amount)
 
                 }).finally(()=>this.loading_index=false)

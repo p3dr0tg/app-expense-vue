@@ -9,6 +9,20 @@
     <title>App Gastos</title>
 </head>
 <style>
+    .input-field div.error {
+        position: relative;
+        left: 0rem;
+        font-size: 0.8rem;
+        color: #FF4081;
+        -webkit-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+        -o-transform: translateY(0%);
+        transform: translateY(0%);
+    }
+    .field_error input,.field_error select{
+        border-bottom:1px solid #ff4081 !important;
+        box-shadow:0 1px 0 0 #ff4081 !important;
+    }
     .toast-close-button{
         position: absolute;
         right: .5em;
@@ -93,7 +107,12 @@
 
     /*-------------------end scroll---------------------------------*/
     .modal.modal-fixed-footer {
-        height: 80% !important;
+        height:100vh !important;
+    }
+    .modal.open{
+        width: 100vw;
+        max-height: 100vh;
+        top: 0 !important;
     }
     /*
      progresss bar
