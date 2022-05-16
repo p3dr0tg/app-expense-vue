@@ -20,3 +20,8 @@ Vue.filter('dateFormat', (value) => {
 Vue.filter('upper',(value)=>{
     return value.toString().toUpperCase()
 })
+Vue.filter('ucwords',(value)=>{
+    return  value?.toString().toLowerCase().replace(/\b[a-z]/g, (letter) =>{
+        return letter.toUpperCase();
+    });
+})

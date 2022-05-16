@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s3"><a href="#test1">Resumen</a></li>
-                <li class="tab col s3"><a class="active" href="#test2">Movimiento</a></li>
-                <li class="tab col s3"><a href="#test3">Estadistica</a></li>
+                <li class="tab col s3"><a href="#test1" @click.prevent="tabs('resumen')">Resumen</a></li>
+                <li class="tab col s3"><a class="active" href="#test2" @click.prevent="tabs('movimiento')">Movimiento</a></li>
+                <li class="tab col s3"><a href="#test3" @click.prevent="tabs('estadistica')">Estadistica</a></li>
             </ul>
         </div>
         <div id="test1" class="col s12">
@@ -27,9 +27,16 @@
     import Summaries from "./Summaries";
     import FooterMovement from "../../components/FooterMovement";
     import Categories from "./Categories";
+    import {EventBus} from "../../event-bus";
+
     export default {
         name: "Dashboard",
         components: {Categories, Summaries, Movement,FooterMovement},
+        methods:{
+            tabs(tab){
+                EventBus.$emit('tabs:dashboard', tab);
+            }
+        },
         computed:{
             ...mapState(['total'])
         }

@@ -25,6 +25,7 @@
         },
         created(){
             this.loadUser();
+            this.loadAccount();
         },
         watch:{
            /* auth(value){
@@ -37,7 +38,7 @@
 
         },
         methods:{
-            ...mapActions(['loadUser']),
+            ...mapActions(['loadUser','loadAccount']),
         },
         computed: {
             ...mapState(['auth']),

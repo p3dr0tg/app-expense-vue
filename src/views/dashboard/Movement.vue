@@ -33,7 +33,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="input-field col s12" :class="{'field_error':errors.saving_account_id}">
                             <material-select v-model="form.saving_account_id">
                                 <option v-for="(item,index) in accountList" :value="item.id" :key="index">{{item.description|upper}}</option>
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="input-field col s12" :class="{'field_error':errors.month}">
                             <select-month v-model="form.month"></select-month>
@@ -112,7 +112,7 @@
 <script>
     import Vue from 'vue'
     import { SwipeList, SwipeOut } from 'vue-swipe-actions';
-    import { mapMutations } from 'vuex'
+    import {mapMutations, mapState} from 'vuex'
     import SelectMonth from "../../components/SelectMonth";
     import SelectYear from "../../components/SelectYear";
     import VueModal from "../../components/VueModal";
@@ -122,6 +122,7 @@
     import MaterialCollection from "../../components/MaterialCollection";
     import Spinner from "../../components/Spinner";
     import ListView from "../../components/ListView";
+    import {EventBus} from "../../event-bus";
     const initFromData = {
         id:-1,
         category_id:null,
@@ -150,7 +151,7 @@
                 form: Object.assign({}, initFromData),
                 type_category:'Ingresos',
                 categoryList:[],
-                accountList:[],
+
                 rows:[],
                 store:'',
                 method:'POST',
@@ -161,16 +162,30 @@
         created(){
 
             this.store = this.$route.name;
-            this.getCategories();
-            this.getAccounts();
-        },
-        mounted(){
-            this.getAll({
-                month:this.now().getMonth()+1,
-                year:this.now().getFullYear()
+            if(this.auth.isAuth){
+                this.getCategories();
+            }
+
+            EventBus.$on('tabs:dashboard',(tab)=>{
+                if(tab==='movimiento'){
+                    this.getAll({
+                        month:this.now().getMonth()+1,
+                        year:this.now().getFullYear()
+                    });
+                }
             });
         },
+        mounted(){
+            if(this.auth.isAuth){
+                this.getAll({
+                    month:this.now().getMonth()+1,
+                    year:this.now().getFullYear()
+                });
+            }
+
+        },
         computed:{
+            ...mapState(['auth']),
             filteredCategory(){
                return this.categoryList.filter((item)=>{
                    return item.type===this.type_category
@@ -186,7 +201,8 @@
                 this.$http.get('movements',{
                     params:{
                         month:date.month,
-                        year:date.year
+                        year:date.year,
+                        saving_account_id:this.auth.account.id
                     }
                 }).then((res)=>{
                     Vue.set(this.$data,'rows',res.data.rows)
@@ -199,14 +215,7 @@
                     Vue.set(this.$data,'categoryList',res.data)
                 })
             },
-            getAccounts(){
-                this.$http.get('saving_accounts').then((res)=>{
-                    Vue.set(this.$data,'accountList',res.data)
-                    if(res.data.length){
-                        this.form.saving_account_id=res.data[0].id
-                    }
-                })
-            },
+
             onDate(e){
                 Vue.set(this.form, 'date', e.target.value)
             },
@@ -281,6 +290,7 @@
                 Vue.set(this.$data, 'form', Object.assign({}, initFromData));
                 this.$refs.date.clean();
                 this.form.month=this.now().getMonth()+1;
+                this.form.saving_account_id=this.auth.account.id;
             },
             onCancel(){
                 this.resetForm();

@@ -2,11 +2,17 @@
     <div>
         <nav class="" role="navigation">
             <div class="nav-wrapper">
-                <a href="javascript:void(0);" @click="routeTo('dashboard')" class="brand-logo"><i class="material-icons">cloud</i>{{auth.user.email}}</a>
-                <ul class="right">
-                    <li ><a href="javascript:void(0);" title="cerrar session" @click="onLogout" class="logout" ><i class="material-icons">phonelink_off</i></a></li>
+                <a href="javascript:void(0);" @click="routeTo('dashboard')" class="brand-logo">
+                    {{auth.user.email}}
+                </a>
+
+                <ul class="right ">
                     <li><a href="javascript:void(0);" data-target="slide-out" id="menu-navbar"  class="sidenav-trigger"><i class="material-icons">menu</i></a></li>
                 </ul>
+              <ul class="ul-account">
+                <li><a class="dropdown-trigger dropdown-account" href="javascript:void(0);" data-target="dropdown1">{{account_description|ucwords}}<i class="material-icons right">arrow_drop_down</i></a></li>
+              </ul>
+
             </div>
         </nav>
         <ul id="slide-out" class="sidenav">
@@ -38,8 +44,16 @@
                                 </ul>
                             </div>
                         </li>
+                        <li>
+                            <a class="collapsible-header waves-effect waves-blue" @click.prevent="onLogout"><i class="material-icons">open_in_browser</i>Cerrar Sesion</a>
+                        </li>
                     </ul>
                 </ul>
+            </li>
+        </ul>
+        <ul id="dropdown1" class="dropdown-content">
+            <li v-for="(item,index) in accountList" @click.prevent="selectAccount(item)">
+                <a href="javascript:void(0)">{{item.description|ucwords}}</a>
             </li>
         </ul>
     </div>
@@ -49,14 +63,21 @@
 
 <script>
     import {mapState, mapMutations,mapActions} from 'vuex';
+    import Vue from "vue";
     export default {
         name: "NavBar",
+        data(){
+            return{
+                //accountList:[],
+            }
+        },
         mounted() {
             M.AutoInit();
             document.addEventListener('DOMContentLoaded',()=>{
                 var elems = document.querySelectorAll('.sidenav');
                 var instances = M.Sidenav.init(elems);
             });
+            this.getAccounts();
         },
         methods:{
             routeTo(route){
@@ -68,10 +89,28 @@
             onLogout(){
                 this.authLogout();
             },
-            ...mapActions(['authLogout']),
+            ...mapActions(['authLogout','setFirstAccount','setSelectAccount']),
+            getAccounts(){
+                this.$http.get('saving_accounts').then((res)=>{
+                    this.$store.commit('setAccountList', res.data)
+                    if(res.data.length){
+                       this.setFirstAccount({account:res.data[0]});
+                    }
+                })
+            },
+            selectAccount(account){
+                this.setSelectAccount({account:account});
+            }
         },
         computed: {
-            ...mapState(['auth']),
+            ...mapState(['auth','accountList']),
+            account_description(){
+                const limit=26
+                if(this.auth.account.description.length>limit){
+                  return this.auth.account.description.substring(0,(limit-3))+'...'
+                }
+                return this.auth.account.description;
+            }
         }
     }
 </script>

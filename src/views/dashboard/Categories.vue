@@ -29,6 +29,8 @@
     import MaterialCollection from "../../components/MaterialCollection";
     import VueGauge from "../../components/VueGauge";
     import Detail from "./Detail";
+    import {EventBus} from "../../event-bus";
+    import {mapState} from "vuex";
 
     export default {
         name: "Categories",
@@ -41,13 +43,20 @@
               title:''
           }
         },
-        mounted(){
-            this.getAll({
-                month:this.now().getMonth()+1,
-                year:this.now().getFullYear()
+        created() {
+            EventBus.$on('tabs:dashboard',(tab)=>{
+                if(tab==='estadistica'){
+                    this.getAll({
+                        month:this.now().getMonth()+1,
+                        year:this.now().getFullYear()
+                    });
+                }
             });
         },
+        mounted(){
+        },
         computed:{
+            ...mapState(['auth']),
             classItem(){
                 return this.rows.map((item)=>{
                     let amount=Number(item.amount)
@@ -66,7 +75,8 @@
                 this.$http.get('movements/categories',{
                     params:{
                         month:date.month,
-                        year:date.year
+                        year:date.year,
+                        saving_account_id:this.auth.account.id
                     }
                 }).then((res)=>{
                     let data=res.data;

@@ -37,6 +37,9 @@
     import MaterialCollection from "../../components/MaterialCollection";
     import Spinner from "../../components/Spinner";
     import Detail from "./Detail";
+    import {mapState} from "vuex";
+    import {EventBus} from "../../event-bus";
+
     export default {
         name: "Summaries",
         components: {Detail, Spinner, MaterialCollection, FilterMovement},
@@ -49,13 +52,21 @@
                 filterDate:{}
             }
         },
-        mounted(){
-            this.getData({
-                month:this.now().getMonth()+1,
-                year:this.now().getFullYear()
+        created() {
+            EventBus.$on('tabs:dashboard',(tab)=>{
+                if(tab==='resumen'){
+                    this.getData({
+                        month:this.now().getMonth()+1,
+                        year:this.now().getFullYear()
+                    });
+                }
             });
         },
+        mounted(){
+
+        },
         computed:{
+            ...mapState(['auth']),
             progress(){
                 return this.rows.map((item)=>{
                     let total=Number(item.income)+Number(item.expenses*-1)
@@ -75,7 +86,8 @@
                 this.$http.get('movements/summary',{
                     params:{
                         month:date.month,
-                        year:date.year
+                        year:date.year,
+                        saving_account_id:this.auth.account.id
                     }
                 }).then((res)=>{
                     Vue.set(this.$data,'rows',res.data.rows);
@@ -85,7 +97,6 @@
                 })
             },
             onDetail(index){
-                console.log('click detalle',index);
                 const record=this.rows[index];
                 this.title='Fecha: '+record.date.split('-').reverse().join('/');
                 const filters='date:'+record.date;

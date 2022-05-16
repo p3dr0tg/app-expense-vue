@@ -47,6 +47,7 @@
     import Vue from 'vue'
     //import firebase from 'firebase'
     import VueModal from "../components/VueModal";
+    import {mapState} from 'vuex';
     export default {
         name: "SavingAccount",
         components: {VueModal},
@@ -70,9 +71,14 @@
 
         },
         methods:{
-            getAll(){
+            getAll(account){
+                if(account==undefined)
+                    account=false;
                 this.$http.get(this.store).then((res)=>{
                     Vue.set(this.$data,'rows',res.data)
+                    if(account){
+                        this.$store.commit('setAccountList', res.data)
+                    }
                 })
             },
             add(){
@@ -93,13 +99,16 @@
                 }).then((res) => {
                     this.$refs.dlgAccount.close();
                     this.alertSuccess('datos guardados');
-                    this.getAll();
+                    this.getAll(true);
                 }).catch((error) => {
                     console.log(error);
                 }).finally(()=>{
                 })
 
             }
+        },
+        computed:{
+            ...mapState(['accountList']),
         }
     }
 </script>
